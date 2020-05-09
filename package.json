@@ -1,0 +1,33 @@
+{
+  "name": "sondage",
+  "version": "1.0.0",
+  "description": "Survey website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SengSerany/web-survey.git"
+  },
+  "keywords": [
+    "nodejs",
+    "survey",
+    "mongodb",
+    "vanillajs"
+  ],
+  "author": "Serany Seng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SengSerany/web-survey/issues"
+  },
+  "homepage": "https://github.com/SengSerany/web-survey#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.7",
+    "mongoose": "^5.9.13"
+  }
+}
