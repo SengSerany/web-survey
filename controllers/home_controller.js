@@ -1,3 +1,3 @@
-exports.index = (req, res) => {
-    res.render('home/home', {title: 'Survey Homepage'});
+exports.index = async (req, res) => {
+    await res.render('home/home');
 }

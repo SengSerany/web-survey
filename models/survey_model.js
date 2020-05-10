@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-let SurveySchema = new Schema({
+let SurveySchema = new mongoose.Schema({
     name: {
         type: String,
         require: true
@@ -12,8 +11,7 @@ let SurveySchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now,
-        required: true
+        default: Date.now
     },
     updateAt: {
         type: Date
