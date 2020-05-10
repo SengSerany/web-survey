@@ -1,0 +1,19 @@
+<%- include('../template/head') -%>
+    <div class="container">
+        <h1>Les sondages</h1>
+
+        <% surveys.forEach(survey => { %>
+            <a href="/survey/<%= survey._id %>"><div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= survey.name %>
+                    </h5>
+                    <p class="card-text">
+                        <%= survey.description %>
+                    </p>
+                </div>
+            </div></a>
+            <br>
+        <% }) %>
+    </div>
+<%- include('../template/foot') -%>

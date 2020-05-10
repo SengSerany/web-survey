@@ -7,6 +7,8 @@ const survey_controller = require('../controllers/survey_controller');
 
 router.get('/new', survey_controller.new);
 
+router.get('/index', survey_controller.index);
+
 router.post('/:id',[
     body('name')
                 .trim()
