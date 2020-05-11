@@ -1,5 +1,9 @@
 <%- include('../template/head') -%>
     <div class="container">
-        <h1>Sondage: <%= title %></h1>
+        <h1>Sondage: <%= survey.title %></h1>
+        <h3>Description:</h3>
+        <p><%= survey.description %></p>
+        <br>
+        <a href="/survey/edit/<%= survey._id%>">Modifier le sondage</a>
     </div>
 <%- include('../template/foot') -%>

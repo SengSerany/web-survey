@@ -9,6 +9,17 @@ router.get('/new', survey_controller.new);
 
 router.get('/index', survey_controller.index);
 
+router.get('/edit/:id', survey_controller.edit);
+
+router.post('/edit/:id',[
+    body('name')
+                .trim()
+                .escape(),
+    body('description')
+                .trim()
+                .escape()
+], survey_controller.update);
+
 router.post('/:id',[
     body('name')
                 .trim()
