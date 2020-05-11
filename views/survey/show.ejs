@@ -1,10 +1,71 @@
 <%- include('../template/head') -%>
     <div class="container">
-        <h1>Sondage: <%= survey.title %></h1>
+        <h1>Sondage: <%= survey.name %></h1>
         <h3>Description:</h3>
         <p><%= survey.description %></p>
+        <br>
+        <h3>Ajouter une question?</h3>
+            <form action="/question/<%= newQuestion._id %>" method="POST">
+                <div class="form-group">
+                    <label for="question">Quelle est la question ?</label>
+                    <input type="text" id="question" name="question" class="form-control" required>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="question">Quel type réponse veux-tu associer à la question ?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="answerType" id="answerType" value="Echelle 1-10" checked>
+                        <label class="form-check-label" for="answerType">
+                            Echelle 1-10
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="answerType" id="answerType" value="Ordonner">
+                        <label class="form-check-label" for="answerType">
+                            Ordonner
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="answerType" id="answerType" value="Entrée de données">
+                        <label class="form-check-label" for="answerType">
+                            Entrée de données
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="answerType" id="answerType" value="Selection-s">
+                        <label class="form-check-label" for="answerType">
+                            Selection-s
+                        </label>
+                    </div>
+                </div>
+                <div id="answer" class="d-none">
+                    <br>
+                    <div class="form-group">
+                        <label for="answerNumber">Combien de réponse pour cette question ?</label>
+                        <select class="form-control" id="answerNumber" name="answerNumber">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="answerName">Réponse 1</label>
+                        <input type="text" id="answerName" name="answerName" class="form-control">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter la question au sondage</button>
+            </form>
         <br>
         <a href="/survey/edit/<%= survey._id%>">Modifier le sondage</a>
         <a href="/survey/delete/<%= survey._id %>">Supprimer le sondage</a>
     </div>
+    <script type="text/javascript" src="/javascript/answerName.js"></script>
 <%- include('../template/foot') -%>

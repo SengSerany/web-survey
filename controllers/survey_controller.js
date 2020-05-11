@@ -1,7 +1,7 @@
 const Survey = require('../models/survey_model');
+const Question = require('../models/question_model');
 const { body,validationResult } = require('express-validator');
 const { sanitizeBody } = require('express-validator');
-
 
 
 exports.index = async (req, res) => {
@@ -14,9 +14,10 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
     try {
-        console.log(req.params.id);
         let survey = await Survey.findById(req.params.id);
-        res.render('survey/show', {survey: survey})
+        let newQuestion = new Question();
+        let questions = await Question.find({}).populate('surveys');
+        res.render('survey/show', {survey: survey, newQuestion: newQuestion, questions: questions})
     } catch (err) {
         return res.status(500).send(err);
     }
