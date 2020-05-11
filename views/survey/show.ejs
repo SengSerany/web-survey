@@ -14,25 +14,25 @@
                 <div class="form-group">
                     <label for="question">Quel type réponse veux-tu associer à la question ?</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answerType" id="answerType" value="Echelle 1-10" checked>
+                        <input class="form-check-input" type="radio" name="answerType" id="scaleAnswer" value="Echelle 1-10" checked>
                         <label class="form-check-label" for="answerType">
                             Echelle 1-10
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answerType" id="answerType" value="Ordonner">
+                        <input class="form-check-input" type="radio" name="answerType" id="orderAnswer" value="Ordonner">
                         <label class="form-check-label" for="answerType">
                             Ordonner
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answerType" id="answerType" value="Entrée de données">
+                        <input class="form-check-input" type="radio" name="answerType" id="inputAnswer" value="Entrée de données">
                         <label class="form-check-label" for="answerType">
                             Entrée de données
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answerType" id="answerType" value="Selection-s">
+                        <input class="form-check-input" type="radio" name="answerType" id="checkBoxAnswer" value="Selection-s">
                         <label class="form-check-label" for="answerType">
                             Selection-s
                         </label>
@@ -43,7 +43,6 @@
                     <div class="form-group">
                         <label for="answerNumber">Combien de réponse pour cette question ?</label>
                         <select class="form-control" id="answerNumber" name="answerNumber">
-                            <option>1</option>
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
@@ -58,6 +57,10 @@
                     <br>
                     <div class="form-group">
                         <label for="answerName">Réponse 1</label>
+                        <input type="text" id="answerName" name="answerName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="answerName">Réponse 2</label>
                         <input type="text" id="answerName" name="answerName" class="form-control">
                     </div>
                 </div>
