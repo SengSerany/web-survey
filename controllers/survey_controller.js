@@ -40,7 +40,7 @@ exports.create = async (req, res) => {
     try {
         let newSurvey = await Survey.create({
             name: req.body.name.replace(/<[^>]*>?/gm,""),
-            description: req.body.description.replace(/<[^>]*>?/gm,"")
+            description: unescape(req.body.description.replace(/<[^>]*>?/gm,""))
         });
         res.render('survey/show', {survey: newSurvey});
     } catch (err) {
@@ -71,6 +71,15 @@ exports.update = async (req, res) => {
         }, { new: true, upsert: true });
         res.render('survey/show', {survey: survey});
     } catch (err) {
+        return res.status(500).send(err);
+    }
+}
+
+exports.delete = async (req, res) => {
+    try {
+        await Survey.findByIdAndDelete(req.params.id);
+        res.redirect('/survey/index');
+    } catch (error) {
         return res.status(500).send(err);
     }
 }

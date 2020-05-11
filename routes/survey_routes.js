@@ -20,13 +20,13 @@ router.post('/edit/:id',[
                 .escape()
 ], survey_controller.update);
 
+router.get('/delete/:id', survey_controller.delete);
+
 router.post('/:id',[
     body('name')
-                .trim()
-                .escape(),
+                .trim(),
     body('description')
                 .trim()
-                .escape()
 ], survey_controller.create);
 
 router.get('/:id', survey_controller.show);
