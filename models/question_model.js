@@ -19,7 +19,7 @@ let QuestionSchema = new mongoose.Schema({
         default: 1
     },
     answerName: [{
-        name: String
+        type: String
     }],
     createdAt: {
         type: Date,

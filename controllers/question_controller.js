@@ -3,7 +3,7 @@ const Survey = require('../models/survey_model');
 const { body,validationResult } = require('express-validator');
 const { sanitizeBody } = require('express-validator');
 
-exports.create = async (req, res) => {
+exports.create = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         let survey = await Survey.findById(req.params.id);
@@ -11,21 +11,20 @@ exports.create = async (req, res) => {
         let questions = await Question.find({}).populate('surveys');
         return res.render('survey/show', {survey: survey, questions: questions, newQuestion: newQuestion, errors: errors.array()});
     }
-    try {
-        let survey = await Survey.findById(req.params.id);
-        let newQuestion = await new Question();
-        await Question.create({
-            question: req.body.question.replace(/<[^>]*>?/gm,""),
-            survey: survey._id,
+    try{
+        let newQuestion = await Question.create({
+            question: req.body.question,
+            survey: req.body.surveyID,
             answerType: req.body.answerType,
-            answerNumber: req.boby.answerNumber,
+            answerNumber: req.body.answerNumber,
             answerName: req.body.answerName
-        })
-        let questions = await Question.find({}).populate('surveys');
-        res.render('survey/show', {survey: survey, newQuestion: newQuestion, questions: questions})
-    } catch (err) {
-        return res.status(500).send(err);
+        });
+        console.log(req.body.answerName);
+        console.log(typeof(req.body.answerName[0]))
+    } catch (e){
+        res.json(e);
     }
+        res.json();
 };
 
 exports.update = async (req, res) => {

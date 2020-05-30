@@ -1,74 +1,112 @@
 <%- include('../template/head') -%>
-    <div class="container">
-        <h1>Sondage: <%= survey.name %></h1>
-        <h3>Description:</h3>
-        <p><%= survey.description %></p>
-        <br>
-        <h3>Ajouter une question?</h3>
-            <form action="/question/<%= newQuestion._id %>" method="POST">
-                <div class="form-group">
-                    <label for="question">Quelle est la question ?</label>
-                    <input type="text" id="question" name="question" class="form-control" required>
+<div class="container">
+    <h1>Sondage: <%= survey.name %></h1>
+    <h3>Description:</h3>
+    <p><%= survey.description %></p>
+    <br>
+    <h3>Les questions du sondage:</h3>
+    <br>
+    <div id="questionsArea">
+        <% questions.forEach(question => { %>
+            <div id="<%= question._id %>" class="questions card">
+                <h4 class="card-header"><%= question.question %></h4>
+                    <div class="card-body">
+                    <p>Type de réponse: <%= question.answerType %></p>
+                    <% if (question.answerType === 'Ordonner' | question.answerType === 'Selection-s') { %>
+                        <p>Réponse-s possible-s:</p>
+                        <ul>
+                            <% if (question.answerName.length !== 1) {%>
+                                <% for ( let i = 0; i < question.answerName.length; i++) {%>
+                                    <li><%= question.answerName[i] %></li>
+                                <% } %>
+                            <%} else if (question.answerName.length === 1) { %>
+                                <% let answersArray = question.answerName[0].split(",");
+                                for (let i = 0; i < answersArray.length; i++) { %>
+                                    <li><%= answersArray[i] %></li>
+                                <% } %>
+                            <% } %>
+                        </ul>
+                    <% } %>
                 </div>
+            </div>
+            <br>
+        <% }) %>
+        <% if (questions.length === 0) { %>
+            <div class="alert alert-warning">
+                Il n'y a pas encore de question à ce sondage.
+            </div>
+            <br>
+        <% } %>
+    </div>
+        <div class="addQuestion alert alert-info">
+        <h3>Ajouter une question?</h3>
+        <form action="/question/<%= newQuestion._id %>" method="POST" id="questionForm">
+            <input type="hidden" name="surveyID" id="surveyID" value="<%= survey._id %>">
+            <div class="form-group">
+                <label for="question">Quelle est la question ?</label>
+                <input type="text" id="question" name="question" class="form-control" required>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="question">Quel type réponse veux-tu associer à la question ?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="answerType" id="scaleAnswer" value="Echelle 1-10"
+                        checked>
+                    <label class="form-check-label" for="answerType">
+                        Echelle 1-10
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="answerType" id="orderAnswer" value="Ordonner">
+                    <label class="form-check-label" for="answerType">
+                        Ordonner
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="answerType" id="inputAnswer"
+                        value="Entrée de données">
+                    <label class="form-check-label" for="answerType">
+                        Entrée de données
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="answerType" id="checkBoxAnswer" value="Selection-s">
+                    <label class="form-check-label" for="answerType">
+                        Selection-s
+                    </label>
+                </div>
+            </div>
+            <div id="answer" class="d-none">
                 <br>
                 <div class="form-group">
-                    <label for="question">Quel type réponse veux-tu associer à la question ?</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answerType" id="scaleAnswer" value="Echelle 1-10" checked>
-                        <label class="form-check-label" for="answerType">
-                            Echelle 1-10
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answerType" id="orderAnswer" value="Ordonner">
-                        <label class="form-check-label" for="answerType">
-                            Ordonner
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answerType" id="inputAnswer" value="Entrée de données">
-                        <label class="form-check-label" for="answerType">
-                            Entrée de données
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="answerType" id="checkBoxAnswer" value="Selection-s">
-                        <label class="form-check-label" for="answerType">
-                            Selection-s
-                        </label>
-                    </div>
+                    <label for="answerNumber">Combien de réponse pour cette question ?</label>
+                    <select class="form-control" id="answerNumber" name="answerNumber">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                    </select>
                 </div>
-                <div id="answer" class="d-none">
+                <br>
+                <div class="form-group answerNameGroup">
+                    <label for="answerName">Réponse 1</label>
+                    <input type="text" id="answerName1" name="answerName" class="form-control">
                     <br>
-                    <div class="form-group">
-                        <label for="answerNumber">Combien de réponse pour cette question ?</label>
-                        <select class="form-control" id="answerNumber" name="answerNumber">
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                        </select>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="answerName">Réponse 1</label>
-                        <input type="text" id="answerName" name="answerName" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="answerName">Réponse 2</label>
-                        <input type="text" id="answerName" name="answerName" class="form-control">
-                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Ajouter la question au sondage</button>
-            </form>
-        <br>
-        <a href="/survey/edit/<%= survey._id%>">Modifier le sondage</a>
-        <a href="/survey/delete/<%= survey._id %>">Supprimer le sondage</a>
+            </div>
+            <button type="submit" id="submitBtn" class="btn btn-outline-success">Ajouter la question au sondage</button>
+        </form>
     </div>
-    <script type="text/javascript" src="/javascript/answerName.js"></script>
+    <br>
+    <a href="/survey/edit/<%= survey._id%>">Modifier le sondage</a>
+    <a href="/survey/delete/<%= survey._id %>">Supprimer le sondage</a>
+</div>
+<script type="text/javascript" src="/javascript/answerName.js"></script>
+<script type="text/javascript" src="/javascript/submitQuestion.js"></script>
 <%- include('../template/foot') -%>

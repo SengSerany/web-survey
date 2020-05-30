@@ -22,7 +22,6 @@ const homeRouter = require('./routes/home_routes');
 const surveyRouter = require('./routes/survey_routes');
 const questionRouter = require('./routes/question_routes');
 
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(logger('dev'));
