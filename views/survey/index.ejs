@@ -3,7 +3,8 @@
         <h1>Les sondages</h1>
 
         <% surveys.forEach(survey => { %>
-            <a href="/survey/<%= survey._id %>"><div class="card" >
+        <%if (Date.now() - survey.createdAt.getTime() < 300) {%> <div class="row justify-content-center text-primary"><h5>\o/ NOUVEAU \o/</h5></div><% } %>
+        <a href="/survey/<%= survey._id %>"><div class="card<%if (Date.now() - survey.createdAt.getTime() < 300) {%> text-white bg-primary mb-3 <% } %>">
                 <div class="card-body">
                     <h5 class="card-title">
                         <%= survey.name %>

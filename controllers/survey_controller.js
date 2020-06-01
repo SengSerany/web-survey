@@ -43,9 +43,8 @@ exports.create = async (req, res) => {
             name: req.body.name.replace(/<[^>]*>?/gm,""),
             description: unescape(req.body.description.replace(/<[^>]*>?/gm,""))
         });
-        let questions = await Question.find({survey: newSurvey._id}).populate('surveys');
-        let newQuestion = await new Question();
-        res.render('survey/show', {survey: newSurvey, questions: questions, newQuestion: newQuestion});
+        let surveys = await Survey.find({});
+        res.render('survey/index', {surveys: surveys});
     } catch (err) {
         return res.status(500).send(err);
     }
