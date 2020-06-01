@@ -8,44 +8,31 @@ exports.create = async (req, res, next) => {
     if (!errors.isEmpty()) {
         let survey = await Survey.findById(req.params.id);
         let newQuestion = await new Question();
-        let questions = await Question.find({}).populate('surveys');
+        let questions = await Question.find({survey: survey._id}).populate('surveys');
         return res.render('survey/show', {survey: survey, questions: questions, newQuestion: newQuestion, errors: errors.array()});
     }
     try{
-        let newQuestion = await Question.create({
+        console.log("2")
+        let createdQuestion = await Question.create({
             question: req.body.question,
-            survey: req.body.surveyID,
+            survey: req.body.survey,
             answerType: req.body.answerType,
             answerNumber: req.body.answerNumber,
             answerName: req.body.answerName
         });
-        console.log(req.body.answerName);
-        console.log(typeof(req.body.answerName[0]))
+        console.log("3")
+        let newQuestion = await new Question();
+        let questions = await Question.find({survey: survey._id}).populate('surveys');
+        res.render('survey/show', {survey: survey, questions: questions, newQuestion: newQuestion });
     } catch (e){
         res.json(e);
     }
-        res.json();
-};
-
-exports.update = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        let survey = await Survey.findById(req.params.id);
-        let newQuestion = await new Question();
-        let questions = await Question.find({}).populate('surveys');
-        return res.render('survey/show', {survey: survey, questions: questions, newQuestion: newQuestion, errors: errors.array()});
-    }
-    try {
-
-    } catch (err) {
-        return res.status(500).send(err);
-    }
-};
-
+}
 exports.delete = async (req, res) => {
     try {
-
+        let taj = await Question.findByIdAndDelete(req.params.id);
     } catch (err) {
         return res.status(500).send(err);
     }
+    res.json();
 };

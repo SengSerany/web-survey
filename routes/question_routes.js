@@ -9,8 +9,6 @@ const question_controller = require('../controllers/question_controller');
 
 router.post('/:id', urlencodedParser, question_controller.create);
 
-router.post('/edit/:id', question_controller.update);
-
-router.get('/delete/:id', question_controller.delete);
+router.delete('/delete/:id', urlencodedParser, question_controller.delete);
 
 module.exports = router;

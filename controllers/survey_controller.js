@@ -15,8 +15,8 @@ exports.index = async (req, res) => {
 exports.show = async (req, res) => {
     try {
         let survey = await Survey.findById(req.params.id);
-        let newQuestion = new Question();
-        let questions = await Question.find({}).populate('surveys');
+        let newQuestion = await new Question();
+        let questions = await Question.find({survey: survey._id}).populate('surveys');
         res.render('survey/show', {survey: survey, newQuestion: newQuestion, questions: questions})
     } catch (err) {
         return res.status(500).send(err);
@@ -43,7 +43,9 @@ exports.create = async (req, res) => {
             name: req.body.name.replace(/<[^>]*>?/gm,""),
             description: unescape(req.body.description.replace(/<[^>]*>?/gm,""))
         });
-        res.render('survey/show', {survey: newSurvey});
+        let questions = await Question.find({survey: newSurvey._id}).populate('surveys');
+        let newQuestion = await new Question();
+        res.render('survey/show', {survey: newSurvey, questions: questions, newQuestion: newQuestion});
     } catch (err) {
         return res.status(500).send(err);
     }
@@ -70,7 +72,9 @@ exports.update = async (req, res) => {
             description: req.body.description.replace(/<[^>]*>?/gm,""),
             updateAt: Date.now()
         }, { new: true, upsert: true });
-        res.render('survey/show', {survey: survey});
+        let questions = await Question.find({survey: survey._id}).populate('surveys');
+        let newQuestion = await new Question();
+        res.render('survey/show', {survey: survey, questions: questions, newQuestion: newQuestion});
     } catch (err) {
         return res.status(500).send(err);
     }
@@ -79,6 +83,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     try {
         await Survey.findByIdAndDelete(req.params.id);
+        await Question.deleteMany({survey: req.params.id});
         res.redirect('/survey/index');
     } catch (error) {
         return res.status(500).send(err);

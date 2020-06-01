@@ -1,6 +1,7 @@
 <%- include('../template/head') -%>
 <div class="container">
     <h1>Sondage: <%= survey.name %></h1>
+    <br>
     <h3>Description:</h3>
     <p><%= survey.description %></p>
     <br>
@@ -8,7 +9,7 @@
     <br>
     <div id="questionsArea">
         <% questions.forEach(question => { %>
-            <div id="<%= question._id %>" class="questions card">
+        <div id="<%= question._id %>" class="questions <% if (Date.now() - question.createdAt.getTime() < 150){%>alert alert-primary<% } else { %>card<% } %>">
                 <h4 class="card-header"><%= question.question %></h4>
                     <div class="card-body">
                     <p>Type de réponse: <%= question.answerType %></p>
@@ -27,6 +28,11 @@
                             <% } %>
                         </ul>
                     <% } %>
+                    <div class="row justify-content-end">
+                        <form action="/question/delete/<%= question._id %>">
+                            <button type="button" class="btn btn-outline-danger">Supprimer</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <br>
@@ -39,7 +45,8 @@
         <% } %>
     </div>
         <div class="addQuestion alert alert-info">
-        <h3>Ajouter une question?</h3>
+        <h4>Ajouter une question?</h4>
+        <br>
         <form action="/question/<%= newQuestion._id %>" method="POST" id="questionForm">
             <input type="hidden" name="surveyID" id="surveyID" value="<%= survey._id %>">
             <div class="form-group">
@@ -107,6 +114,9 @@
     <a href="/survey/edit/<%= survey._id%>">Modifier le sondage</a>
     <a href="/survey/delete/<%= survey._id %>">Supprimer le sondage</a>
 </div>
+<br>
+<br>
 <script type="text/javascript" src="/javascript/answerName.js"></script>
 <script type="text/javascript" src="/javascript/submitQuestion.js"></script>
+<script type="text/javascript" src="/javascript/deleteQuestion.js"></script>
 <%- include('../template/foot') -%>
