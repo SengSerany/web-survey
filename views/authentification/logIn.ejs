@@ -1,0 +1,17 @@
+<%- include('../template/head') -%>
+<div class="container">
+    <h2>Se connecter</h2>
+    <br>
+    <form action="/authentification/logIn" method="POST">
+        <div class="form-group">
+          <label for="email">Address Email</label>
+          <input type="email" class="form-control" id="email" aria-describedby="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-info">Se connecter</button>
+      </form>
+</div>
+<%- include('../template/foot') -%>

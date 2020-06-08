@@ -60,10 +60,10 @@ exports.edit = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const firstErrors = validationResult(req);
-    if (!firstErrors.isEmpty()) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         let survey = await Survey.findById(req.params.id);
-        return res.render('survey/edit', {survey: survey, errors: firstErrors.array()});
+        return res.render('survey/edit', {survey: survey, errors: errors.array()});
     }
     try {
         let survey = await Survey.findByIdAndUpdate(req.params.id, {

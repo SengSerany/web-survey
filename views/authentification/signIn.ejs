@@ -1,0 +1,34 @@
+<%- include('../template/head') -%>
+<div class="container">
+    <div class="card text-white alert-info mb-3">
+        <div class="card-body text-dark">
+            <h2>S'inscrire</h2>
+            <br>
+            <form action="/authentification/signIn" method="POST">
+                <div class="form-group">
+                    <label for="username">Pseudonyme</label>
+                    <input type="text" class="form-control" name="username" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" class="form-control" name="password" id="password" required>
+                            <small id="emailHelp" class="form-text text-muted">Doit contenir 6 caractères minimum.</small>
+                        </div>
+                        <div class="col">
+                            <label for="passwordConfirm">Confirmation de mot de passe</label>
+                            <input type="password" class="form-control" name="passwordConfirm" id="passwordConfirm" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-info">S'inscrire</button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../template/foot') -%>
