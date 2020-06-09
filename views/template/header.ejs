@@ -18,8 +18,13 @@
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
+        <% if (currentUser === undefined) {%>
         <a class="btn btn-outline-secondary my-2 my-sm-0" href="/authentification/logIn">Se connecter</a>
         <a class="btn btn-info my-2 my-sm-0" href="/authentification/signIn">S'inscrire</a>
+        <% } else { %>
+          <button class="btn btn-light my-2 my-sm-0" disabled>Session de <%= currentUser.username %></button>
+        <a class="btn btn-danger my-2 my-sm-0" href="/authentification/logout">Se deconnecter</a>
+        <% } %>
       </form>
     </div>
   </div>

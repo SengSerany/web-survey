@@ -9,7 +9,8 @@ exports.index = async (req, res) => {
         let surveys = await Survey.find({});
         res.render('survey/index', {surveys: surveys});
     } catch (err) {
-        return res.status(500).send(err);    }
+        return res.status(500).send(err);
+    }
 }
 
 exports.show = async (req, res) => {

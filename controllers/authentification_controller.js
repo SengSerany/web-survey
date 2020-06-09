@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user_model');
+const passport = require('passport');
 const { body,validationResult } = require('express-validator');
 const { sanitizeBody } = require('express-validator');
 
@@ -21,8 +22,18 @@ exports.signIn = async (req, res) => {
     }
 }
 
-exports.connect = async (req, res) => {
-    await res.render('authentification/signIn');
+exports.connect = async (req, res, next) => {
+    try {
+        await passport.authenticate('local', {
+            successRedirect: '/authentification/success',
+            failureRedirect: '/authentification/failed',
+            failureFlash: true,
+            successFlash: true
+        })(req, res, next);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 }
 
 exports.register = async (req, res) => {
@@ -72,4 +83,18 @@ exports.register = async (req, res) => {
         return res.render('authentification/signIn', {user: user, err: error});
 
     }
+}
+
+exports.success = async (req, res) => {
+    res.render('home/home', {success: [{ msg:  "Tu es bien connecté ! :)"}]});
+}
+
+exports.failed = async (req, res) => {
+    res.render('authentification/logIn', {errors: [{ msg: "Le mot de passe ou l'email est erroné" }]})
+}
+
+exports.logout = async (req, res) => {
+    req.logout();
+    req.flash('success_msg', 'Vous êtes déconnecté !');
+    res.redirect('/');
 }

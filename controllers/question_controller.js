@@ -12,7 +12,6 @@ exports.create = async (req, res, next) => {
         return res.render('survey/show', {survey: survey, questions: questions, newQuestion: newQuestion, errors: errors.array()});
     }
     try{
-        console.log("2")
         let createdQuestion = await Question.create({
             question: req.body.question,
             survey: req.body.survey,
@@ -20,7 +19,6 @@ exports.create = async (req, res, next) => {
             answerNumber: req.body.answerNumber,
             answerName: req.body.answerName
         });
-        console.log("3")
         let newQuestion = await new Question();
         let questions = await Question.find({survey: survey._id}).populate('surveys');
         res.render('survey/show', {survey: survey, questions: questions, newQuestion: newQuestion });
